@@ -98,9 +98,10 @@ const LPNDateTableHead = ({
                 </Grid>
                 <TextField
                   size="small"
-                  inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 } }}
+                  inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 }, "data-testid":"Filter Input"}}
                   value={filters[column.id] || ""}
                   onChange={(e) => handleFilterChange(e, column.id)}
+                  
                 />
               </Grid>
             ) : null}

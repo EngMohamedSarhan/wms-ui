@@ -128,7 +128,7 @@ const LPNDateCheckPage = () => {
 
   const handleRowSave = (i) => {
     delete unsavedRowsRef.current[i];
-    originalRowsRef.current.splice(i, 1);
+    originalRowsRef.current.splice(i + rowsPerPage * page, 1);
     if (Object.keys(unsavedRowsRef.current).length === 0) {
       setIsUpdated(false);
     }
@@ -228,8 +228,10 @@ const LPNDateCheckPage = () => {
     }
 
     setRows(temp);
+    if (Object.keys(unsavedRowsRef.current).length == 0 && !isSaveFilter) {
+      setPage(0);
+    }
   };
-
   const handleReset = () => {
     setIsUpdated(false);
     unsavedRowsRef.current = {};
@@ -253,6 +255,7 @@ const LPNDateCheckPage = () => {
     if (selectedWarehouse !== INITIAL_SELECTED_WAREHOUSE) {
       getLPNData();
       setSaveAllCounter(saveAllCounter + 1);
+      setPage(0);
     }
   }, [selectedWarehouse]);
 
@@ -263,7 +266,7 @@ const LPNDateCheckPage = () => {
       setRows([...filteredRowsRef.current].sort(getComparator(sortOrder, sort)));
     }
   }, [sort, sortOrder]);
-
+  console.log(unsavedRowsRef.current)
   return (
     <PageLayout>
       <Grid container direction="column" pt={2} pl={5}>
@@ -339,7 +342,7 @@ const LPNDateCheckPage = () => {
         />
         <Grid container justifyContent="flex-end">
           <Fade unmountOnExit in={isUpdated}>
-            <Button sx={{ m: 1 }} onClick={handleReset}>
+            <Button variant="contained" sx={{ m: 1 }} onClick={handleReset}>
               {en.clearChanges}
             </Button>
           </Fade>

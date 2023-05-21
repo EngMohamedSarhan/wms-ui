@@ -12,7 +12,6 @@ const usePostAdjustOne = () => {
     axios
       .post(ADJUST_ONE_API, row)
       .then((res) => {
-        console.log(res.data);
         if (onSuccess) {
           onSuccess(res.data);
         }

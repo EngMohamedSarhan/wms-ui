@@ -26,7 +26,7 @@ const AlertModal = ({
   };
 
   const handleSecondAction = () => {
-    onAction();
+    onSecondAction();
     if (onClose) {
       onClose();
     }

@@ -18,22 +18,3 @@ exports[`RouteChip Component RouteChip snapshot 1`] = `
   variant="outlined"
 />
 `;
-
-exports[`RouteChip snapshot RouteChip snapshot 1`] = `
-<ForwardRef(Chip)
-  color="primary"
-  data-testid="route-chip"
-  icon={
-    <Memo
-      fontSize="small"
-    />
-  }
-  label="test"
-  sx={
-    Object {
-      "fontWeight": "500",
-    }
-  }
-  variant="outlined"
-/>
-`;

@@ -64,7 +64,7 @@ const HomePage = () => {
             </Select>
           </FormControl>
         </Grid>
-        <Grid container pt={2} spacing={3} rowGap={4}>
+        <Grid container pt={2} spacing={3} rowGap={4}>         
           {renderApps()}
         </Grid>
       </Grid>

@@ -21,25 +21,3 @@ exports[`Modal Component Modal snapshot 1`] = `
   <ForwardRef(DialogActions) />
 </ForwardRef(Dialog)>
 `;
-
-exports[`Modal snapshot Modal snapshot 1`] = `
-<ForwardRef(Dialog)
-  aria-labelledby="modal"
-  data-testid="modal"
-  onClose={[MockFunction]}
-  open={true}
->
-  <ModalTitle
-    onClose={[MockFunction]}
-  />
-  <ForwardRef(DialogContent)
-    sx={
-      Object {
-        "maxHeight": 300,
-        "minWidth": 300,
-      }
-    }
-  />
-  <ForwardRef(DialogActions) />
-</ForwardRef(Dialog)>
-`;

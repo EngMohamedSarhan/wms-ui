@@ -1,64 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Modal snapshot Modal snapshot 1`] = `
-<ForwardRef(DialogTitle)
-  sx={
-    Object {
-      "color": "primary.main",
-      "m": 0,
-      "minHeight": 50,
-      "p": 2,
-    }
-  }
->
-  test
-  <ForwardRef(IconButton)
-    aria-label="close"
-    onClick={[MockFunction]}
-    sx={
-      Object {
-        "color": [Function],
-        "position": "absolute",
-        "right": 8,
-        "top": 8,
-      }
-    }
-  >
-    <Memo />
-  </ForwardRef(IconButton)>
-</ForwardRef(DialogTitle)>
-`;
-
 exports[`ModalTitle Component ModalTitle snapshot 1`] = `
-<ForwardRef(DialogTitle)
-  sx={
-    Object {
-      "color": "primary.main",
-      "m": 0,
-      "minHeight": 50,
-      "p": 2,
-    }
-  }
->
-  test
-  <ForwardRef(IconButton)
-    aria-label="close"
-    onClick={[MockFunction]}
-    sx={
-      Object {
-        "color": [Function],
-        "position": "absolute",
-        "right": 8,
-        "top": 8,
-      }
-    }
-  >
-    <Memo />
-  </ForwardRef(IconButton)>
-</ForwardRef(DialogTitle)>
-`;
-
-exports[`ModalTitle snapshot ModalTitle snapshot 1`] = `
 <ForwardRef(DialogTitle)
   sx={
     Object {

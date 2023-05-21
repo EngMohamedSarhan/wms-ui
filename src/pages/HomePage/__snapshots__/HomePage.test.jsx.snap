@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LPNDateTableRow Component LPNDateTableRow snapshot 1`] = `
+exports[`HomePageComponent HomePage snapshot 1`] = `
 <Context.Provider
   value={
     Object {
@@ -24,19 +24,6 @@ exports[`LPNDateTableRow Component LPNDateTableRow snapshot 1`] = `
     }
   }
 >
-  <LocalizationProvider
-    dateAdapter={[Function]}
-  >
-    <LPNDateTableRow
-      index={0}
-      onRowSave={[MockFunction]}
-      onRowSaveFailed={[MockFunction]}
-      onRowUpdate={[MockFunction]}
-      row={Object {}}
-      saveAllCounter={0}
-      setIsPageUpdated={[MockFunction]}
-      unsavedRowsRef={Object {}}
-    />
-  </LocalizationProvider>
+  <HomePage />
 </Context.Provider>
 `;

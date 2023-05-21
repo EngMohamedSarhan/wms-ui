@@ -48,7 +48,7 @@ const LPNDateTableRow = ({
   const [isUpdated, setIsUpdated] = useState(false);
 
   const handleManufactureDateChange = (value) => {
-    if (!value) {
+    if (!value || value == "") {
       setManufactureDate(null);
       if (row.manufacturedDate) {
         setIsUpdated(true);
@@ -67,7 +67,7 @@ const LPNDateTableRow = ({
   };
 
   const handleExpirationDateChange = (value) => {
-    if (!value) {
+    if (!value || value == "") {
       setExpirationDate(null);
       if (row.expirationDate) {
         setIsUpdated(true);
@@ -86,7 +86,7 @@ const LPNDateTableRow = ({
   };
 
   const handlePriortyDateChange = (value) => {
-    if (!value) {
+    if (!value || value == "") {
       setConsumptionPriorityDate(null);
       if (row.consumptionPriorityDate) {
         setIsUpdated(true);
@@ -122,7 +122,9 @@ const LPNDateTableRow = ({
         location: selectedWarehouse,
       },
       ({ isSuccess, sourceContainerId, statusMessage }) => {
-        setIsUpdated(false);
+        if (isSuccess) {
+          setIsUpdated(false);
+        }
         dispatch(
           openNotification({
             title: en.details,
@@ -182,6 +184,7 @@ const LPNDateTableRow = ({
 
             return (
               <DatePicker
+                data-testid="Manufactured Date"
                 value={manufactureDate}
                 inputFormat="MM/DD/YYYY"
                 onChange={handleManufactureDateChange}
@@ -195,6 +198,7 @@ const LPNDateTableRow = ({
 
             return (
               <DatePicker
+                data-testid="Expiration Date"
                 value={expirationDate}
                 inputFormat="MM/DD/YYYY"
                 onChange={handleExpirationDateChange}
@@ -217,6 +221,7 @@ const LPNDateTableRow = ({
                 </Grid>
                 <Grid item xs={10}>
                   <DatePicker
+                    data-testid="Consumption Priority Date"
                     value={consumptionPriorityDate}
                     inputFormat="MM/DD/YYYY"
                     onChange={handlePriortyDateChange}

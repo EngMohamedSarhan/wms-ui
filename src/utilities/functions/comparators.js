@@ -3,6 +3,7 @@ import { SortOrders } from "../constants/sort";
 export const descendingComparator = (a, b, orderBy) => {
   const x = typeof a[orderBy] === "string" ? a[orderBy].toLowerCase() : a[orderBy];
   const y = typeof b[orderBy] === "string" ? b[orderBy].toLowerCase() : b[orderBy];
+  // console.log(x, y);
 
   if (y < x || (!y && x)) {
     return -1;

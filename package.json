@@ -30,8 +30,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\"",
-    "eject": "react-scripts eject"
+    "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!axios)/\" --coverage --watchAll",
+    "eject": "react-scripts eject",
+    "clear_jest": "jest --clearCache",
+    "jest-preview": "jest-preview"
   },
   "eslintConfig": {
     "extends": [
@@ -52,9 +54,11 @@
     ]
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.21.4",
     "eslint": "^8.37.0",
     "eslint-plugin-react": "^7.32.2",
     "history": "^5.3.0",
+    "jest-preview": "^0.3.1",
     "react-shallow-renderer": "^16.15.0"
   }
 }

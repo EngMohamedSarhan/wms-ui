@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { ThemeProvider } from "@emotion/react";
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import ShallowRenderer from "react-shallow-renderer";
 
@@ -29,6 +29,23 @@ describe("AlertModal Component", () =>
     );
     const modal = queryByTestId("alert-modal");
     expect(modal).toBeInTheDocument();
+  }));
+
+describe("AlertModal Action Component", () =>
+  test("AlertModal Action rendering", () => {
+    const onClose = jest.fn();
+    const onAction = jest.fn();
+    const { container } = render(
+      <ThemeProvider theme={theme}>
+        <AlertModal isOpen={true} onClose={onClose} onAction={onAction} />
+      </ThemeProvider>
+    );
+    const button = screen.queryByText("Ok");
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+    expect(onAction).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalled();
   }));
 
 describe("AlertModal Component", () =>

@@ -12,7 +12,6 @@ const usePostAdjustAll = () => {
     axios
       .post(ADJUST_ALL_API, row)
       .then((res) => {
-        console.log(res.data);
         if (onSuccess) {
           onSuccess(res.data);
         }

@@ -4,7 +4,6 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import ShallowRenderer from "react-shallow-renderer";
-
 import HomeMenuItem from "./HomeMenuItem";
 
 describe("HomeMenuItem Component", () =>

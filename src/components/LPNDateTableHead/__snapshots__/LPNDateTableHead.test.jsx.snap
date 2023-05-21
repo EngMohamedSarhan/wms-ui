@@ -57,6 +57,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -124,6 +125,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -191,6 +193,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -258,6 +261,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -325,6 +329,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -392,6 +397,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -459,6 +465,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -526,6 +533,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -593,6 +601,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -660,6 +669,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -727,6 +737,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -745,7 +756,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         Object {
           "color": "primary.main",
           "fontSize": "16px",
-          "minWidth": 150,
+          "minWidth": 250,
           "p": 1,
           "pt": 0.5,
         }
@@ -794,6 +805,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -861,6 +873,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -928,6 +941,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -995,6 +1009,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -1062,6 +1077,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
@@ -1129,6 +1145,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         <ForwardRef(TextField)
           inputProps={
             Object {
+              "data-testid": "Filter Input",
               "sx": Object {
                 "p": 0.2,
                 "pl": 0.5,
