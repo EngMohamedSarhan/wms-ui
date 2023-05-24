@@ -1,4 +1,5 @@
 import { FormControl, MenuItem, Select } from "@mui/material";
+import PropTypes from "prop-types";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -8,11 +9,14 @@ import {
 } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
 
-const WarehousePicker = (props) => {
+const WarehousePicker = ({ onChange, ...props }) => {
   const dispatch = useDispatch();
   const { selectedWarehouse, warehouses } = useSelector(settingsState);
 
-  const handleChange = (event) => dispatch(setSelectedWarehouse(event.target.value));
+  const handleChange = (event) =>
+    onChange
+      ? onChange(() => dispatch(setSelectedWarehouse(event.target.value)))
+      : dispatch(setSelectedWarehouse(event.target.value));
 
   const renderWarehouses = () =>
     warehouses.length > 0 ? (
@@ -41,6 +45,10 @@ const WarehousePicker = (props) => {
       </Select>
     </FormControl>
   );
+};
+
+WarehousePicker.propTypes = {
+  onChange: PropTypes.func,
 };
 
 export default WarehousePicker;

@@ -124,7 +124,7 @@ const TaskGroupPage = () => {
             <TransferList
               title={en.usersListTitle}
               label={en.users}
-              renderBy="userId"
+              renderBy={["firstName", "lastName"]}
               valueBy="userId"
               height="90%"
               items={users}

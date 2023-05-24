@@ -212,6 +212,74 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         Object {
           "color": "primary.main",
           "fontSize": "16px",
+          "minWidth": 250,
+          "p": 1,
+          "pt": 0.5,
+        }
+      }
+    >
+      <ForwardRef(Grid)
+        container={true}
+        flexDirection="column"
+      >
+        <ForwardRef(Grid)
+          container={true}
+        >
+          <ForwardRef(Grid)
+            item={true}
+            sx={
+              Object {
+                "height": 75,
+              }
+            }
+            xs={8}
+          >
+            Reason
+          </ForwardRef(Grid)>
+          <ForwardRef(Grid)
+            item={true}
+            xs={4}
+          >
+            <ForwardRef(IconButton)
+              onClick={[Function]}
+              size="small"
+              sx={
+                Object {
+                  "height": 24,
+                  "marginLeft": "2px",
+                  "width": 24,
+                }
+              }
+            >
+              <Styled(memo)
+                fontSize="small"
+                open={false}
+              />
+            </ForwardRef(IconButton)>
+          </ForwardRef(Grid)>
+        </ForwardRef(Grid)>
+        <ForwardRef(TextField)
+          inputProps={
+            Object {
+              "data-testid": "Filter Input",
+              "sx": Object {
+                "p": 0.2,
+                "pl": 0.5,
+                "pr": 0.5,
+              },
+            }
+          }
+          onChange={[Function]}
+          size="small"
+          value=""
+        />
+      </ForwardRef(Grid)>
+    </ForwardRef(TableCell)>
+    <ForwardRef(TableCell)
+      sx={
+        Object {
+          "color": "primary.main",
+          "fontSize": "16px",
           "minWidth": 145,
           "p": 1,
           "pt": 0.5,
@@ -642,7 +710,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
             }
             xs={8}
           >
-            Suggested CPD
+            Suggested Date
           </ForwardRef(Grid)>
           <ForwardRef(Grid)
             item={true}
@@ -681,6 +749,38 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
           size="small"
           value=""
         />
+      </ForwardRef(Grid)>
+    </ForwardRef(TableCell)>
+    <ForwardRef(TableCell)
+      sx={
+        Object {
+          "color": "primary.main",
+          "fontSize": "16px",
+          "minWidth": 100,
+          "p": 1,
+          "pt": 0.5,
+        }
+      }
+    >
+      <ForwardRef(Grid)
+        container={true}
+        flexDirection="column"
+      >
+        <ForwardRef(Grid)
+          container={true}
+        >
+          <ForwardRef(Grid)
+            item={true}
+            sx={
+              Object {
+                "height": 100,
+              }
+            }
+            xs={8}
+          >
+            Accept Suggested Date
+          </ForwardRef(Grid)>
+        </ForwardRef(Grid)>
       </ForwardRef(Grid)>
     </ForwardRef(TableCell)>
     <ForwardRef(TableCell)
@@ -711,74 +811,6 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
             xs={8}
           >
             Product Life In Days
-          </ForwardRef(Grid)>
-          <ForwardRef(Grid)
-            item={true}
-            xs={4}
-          >
-            <ForwardRef(IconButton)
-              onClick={[Function]}
-              size="small"
-              sx={
-                Object {
-                  "height": 24,
-                  "marginLeft": "2px",
-                  "width": 24,
-                }
-              }
-            >
-              <Styled(memo)
-                fontSize="small"
-                open={false}
-              />
-            </ForwardRef(IconButton)>
-          </ForwardRef(Grid)>
-        </ForwardRef(Grid)>
-        <ForwardRef(TextField)
-          inputProps={
-            Object {
-              "data-testid": "Filter Input",
-              "sx": Object {
-                "p": 0.2,
-                "pl": 0.5,
-                "pr": 0.5,
-              },
-            }
-          }
-          onChange={[Function]}
-          size="small"
-          value=""
-        />
-      </ForwardRef(Grid)>
-    </ForwardRef(TableCell)>
-    <ForwardRef(TableCell)
-      sx={
-        Object {
-          "color": "primary.main",
-          "fontSize": "16px",
-          "minWidth": 250,
-          "p": 1,
-          "pt": 0.5,
-        }
-      }
-    >
-      <ForwardRef(Grid)
-        container={true}
-        flexDirection="column"
-      >
-        <ForwardRef(Grid)
-          container={true}
-        >
-          <ForwardRef(Grid)
-            item={true}
-            sx={
-              Object {
-                "height": 75,
-              }
-            }
-            xs={8}
-          >
-            Reason
           </ForwardRef(Grid)>
           <ForwardRef(Grid)
             item={true}
@@ -1164,7 +1196,7 @@ exports[`LPNDateTableHead Component LPNDateTableHead snapshot 1`] = `
         Object {
           "color": "primary.main",
           "fontSize": "16px",
-          "minWidth": 40,
+          "minWidth": 100,
           "p": 1,
           "pt": 0.5,
         }

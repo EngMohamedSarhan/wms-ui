@@ -79,30 +79,36 @@ const LPNDateTableHead = ({
             {!column.isSave ? (
               <Grid container flexDirection="column">
                 <Grid container>
-                  <Grid item xs={8} sx={{ height: 75 }}>
+                  <Grid item xs={8} sx={{ height: column.disableFilter ? 100 : 75 }}>
                     {column.label}
                   </Grid>
-                  <Grid item xs={4}>
-                    <IconButton
-                      color={sort === column.id ? "primary" : undefined}
-                      size="small"
-                      sx={{ marginLeft: "2px", width: 24, height: 24 }}
-                      onClick={() => handleSort(column.id)}
-                    >
-                      <RotatableArrowUpward
-                        fontSize="small"
-                        open={sort === column.id && sortOrder === SortOrders.desc}
-                      />
-                    </IconButton>
-                  </Grid>
+                  {!column.disableSort ? (
+                    <Grid item xs={4}>
+                      <IconButton
+                        color={sort === column.id ? "primary" : undefined}
+                        size="small"
+                        sx={{ marginLeft: "2px", width: 24, height: 24 }}
+                        onClick={() => handleSort(column.id)}
+                      >
+                        <RotatableArrowUpward
+                          fontSize="small"
+                          open={sort === column.id && sortOrder === SortOrders.desc}
+                        />
+                      </IconButton>
+                    </Grid>
+                  ) : null}
                 </Grid>
-                <TextField
-                  size="small"
-                  inputProps={{ sx: { p: 0.2, pl: 0.5, pr: 0.5 }, "data-testid":"Filter Input"}}
-                  value={filters[column.id] || ""}
-                  onChange={(e) => handleFilterChange(e, column.id)}
-                  
-                />
+                {!column.disableFilter ? (
+                  <TextField
+                    size="small"
+                    inputProps={{
+                      sx: { p: 0.2, pl: 0.5, pr: 0.5 },
+                      "data-testid": "Filter Input",
+                    }}
+                    value={filters[column.id] || ""}
+                    onChange={(e) => handleFilterChange(e, column.id)}
+                  />
+                ) : null}
               </Grid>
             ) : null}
           </TableCell>

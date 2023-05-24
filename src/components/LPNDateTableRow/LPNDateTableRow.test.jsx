@@ -2,7 +2,7 @@
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { React, useRef } from "react";
+import { React } from "react";
 import { Provider } from "react-redux";
 import ShallowRenderer from "react-shallow-renderer";
 
@@ -11,19 +11,39 @@ import LPNDateTableRow from "./LPNDateTableRow";
 import theme from "../../styles/theme";
 import { ThemeProvider } from "@mui/material";
 
+const rowData = {
+  id: "0",
+  itemId: "532432",
+  itemDescription: "243 SA",
+  ilpnId: "2222X",
+  lpnStatus: "Not Allocated",
+  locationId: "06203A",
+  lpnQuantityInCases: 13,
+  reason: "EXP DATE ITEM MISSING EXPDATE",
+  dateCode: "E",
+  trackManufacturingDate: 1,
+  trackExpiryDate: 1,
+  mfgDateDiff: 8,
+  manufacturedDate: "2021-06-17T",
+  expirationDate: "2022-05-13T",
+  consumptionPriorityDate: "2022-06-17T",
+};
+
 describe("LPNDateTableRow Component", () =>
   test("LPNDateTableRow action", () => {
     const onRowUpdate = jest.fn();
     const onRowSave = jest.fn();
     const setIsPageUpdated = jest.fn();
     const onRowSaveFailed = jest.fn();
+    const onRowValidation = jest.fn();
     const { container } = render(
       <Provider store={store}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <LPNDateTableRow
-            row={{}}
+            row={rowData}
             index={0}
             unsavedRowsRef={{}}
+            onRowValidation={onRowValidation}
             onRowUpdate={onRowUpdate}
             onRowSave={onRowSave}
             onRowSaveFailed={onRowSaveFailed}
@@ -45,21 +65,22 @@ describe("LPNDateTableRow Component", () =>
     const onRowSave = jest.fn();
     const onRowSaveFailed = jest.fn();
     const setIsUpdated = jest.fn();
+    const onRowValidation = jest.fn();
 
     const renderer = new ShallowRenderer();
     renderer.render(
       <Provider store={store}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <LPNDateTableRow
-            row={{}}
+            row={rowData}
             index={0}
             unsavedRowsRef={{}}
+            onRowValidation={onRowValidation}
             onRowUpdate={onRowUpdate}
             saveAllCounter={0}
             setIsPageUpdated={setIsUpdated}
             onRowSave={onRowSave}
             onRowSaveFailed={onRowSaveFailed}
-
           />
         </LocalizationProvider>
       </Provider>
@@ -74,31 +95,17 @@ describe("LPNDateTableRow Component", () =>
     const onRowSaveFailed = jest.fn();
     const ref = { current: {} };
     const setIsUpdated = jest.fn();
+    const onRowValidation = jest.fn();
 
-    const { container } = render(
+    render(
       <Provider store={store}>
         <ThemeProvider theme={theme}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <LPNDateTableRow
-              row={{
-                id: "0",
-                itemId: "532432",
-                itemDescription: "243 SA",
-                ilpnId: "2222X",
-                lpnStatus: "Not Allocated",
-                locationId: "06203A",
-                lpnQuantityInCases: 13,
-                reason: "EXP DATE ITEM MISSING EXPDATE",
-                dateCode: "E",
-                trackManufacturingDate: 1,
-                trackExpiryDate: 1,
-                mfgDateDiff: 8,
-                manufacturedDate: "2021-06-17T",
-                expirationDate: "2022-05-13T",
-                consumptionPriorityDate: "2022-06-17T",
-              }}
+              row={rowData}
               index={0}
               unsavedRowsRef={ref}
+              onRowValidation={onRowValidation}
               onRowUpdate={onRowUpdate}
               onRowSave={onRowSave}
               onRowSaveFailed={onRowSaveFailed}

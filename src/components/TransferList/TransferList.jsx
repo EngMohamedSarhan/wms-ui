@@ -1,8 +1,10 @@
-import { FilterAltOutlined } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import {
   Checkbox,
   colors,
   Divider,
+  Fade,
+  IconButton,
   ListItemButton,
   TextField,
   Typography,
@@ -28,13 +30,23 @@ const TransferList = ({
 
   const handleFilterChange = (e) => setFilter(e.target.value);
 
+  const handleFilterReset = () => setFilter("");
+
+  const getRenderByValue = (item) => {
+    if (typeof renderBy === "string") {
+      return item[renderBy];
+    } else {
+      return renderBy.map((key) => item[key]).join(" ");
+    }
+  };
+
   const renderItems = () =>
     items
       .filter((item) => {
         let value = item;
 
         if (renderBy) {
-          value = item[renderBy];
+          value = getRenderByValue(item);
         }
 
         return value.toLowerCase().includes(filter.toLowerCase());
@@ -43,8 +55,9 @@ const TransferList = ({
         let [value, text] = [item, item];
 
         if (renderBy) {
-          text = item[renderBy];
+          text = getRenderByValue(item);
         }
+
         if (valueBy) {
           value = item[valueBy];
         }
@@ -98,19 +111,43 @@ const TransferList = ({
                 sx={{ ml: 2 }}
               />
             </Grid>
-            <Grid item>
+            <Grid item xs={10}>
               <Grid container alignItems="center">
-                <Grid item xs={9}>
+                <Grid item xs={5}>
                   <TextField
                     size="small"
+                    value={filter}
                     inputProps={{
                       sx: { p: 0.5 },
                     }}
                     InputProps={{
-                      endAdornment: <FilterAltOutlined color="primary" />,
+                      endAdornment: (
+                        <Fade in={Boolean(filter)}>
+                          <IconButton
+                            sx={{ p: 0, marginRight: -1 }}
+                            onClick={handleFilterReset}
+                          >
+                            <Close color="error" />
+                          </IconButton>
+                        </Fade>
+                      ),
                     }}
                     onChange={handleFilterChange}
                   />
+                </Grid>
+                <Grid item>
+                  <Typography
+                    ml={1}
+                    color="primary.main"
+                    fontSize={14}
+                    fontWeight="600"
+                  >
+                    {`(Total Count: ${items.length})${
+                      selected.length
+                        ? ` (Selected Records: ${selected.length})`
+                        : ""
+                    }`}
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>

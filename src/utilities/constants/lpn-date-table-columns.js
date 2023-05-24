@@ -2,6 +2,7 @@ const columns = [
   { id: "itemId", label: "Item", minWidth: 90 },
   { id: "itemDescription", label: "Item Description", minWidth: 220 },
   { id: "ilpnId", label: "LPN ID", minWidth: 110 },
+  { id: "reason", label: "Reason", minWidth: 250 },
   {
     id: "lpnStatus",
     label: "LPN Status Description",
@@ -34,16 +35,23 @@ const columns = [
   },
   {
     id: "suggestedCPD",
-    label: "Suggested CPD",
+    label: "Suggested Date",
     minWidth: 180,
     isSuggestedCPD: true,
+  },
+  {
+    id: "acceptSuggestedDate",
+    label: "Accept Suggested Date",
+    minWidth: 100,
+    isAcceptDate: true,
+    disableFilter: true,
+    disableSort: true,
   },
   {
     id: "productLifeInDays",
     label: "Product Life In Days",
     minWidth: 110,
   },
-  { id: "reason", label: "Reason", minWidth: 250 },
   { id: "dateCode", label: "Date Code", minWidth: 90 },
   {
     id: "trackManufacturingDate",
@@ -56,7 +64,7 @@ const columns = [
   {
     id: "save",
     isSave: true,
-    minWidth: 40,
+    minWidth: 100,
     sx: {
       position: "sticky",
       right: 0,

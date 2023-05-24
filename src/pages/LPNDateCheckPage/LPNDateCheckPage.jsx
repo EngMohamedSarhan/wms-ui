@@ -3,7 +3,15 @@ import {
   ExitToAppOutlined,
   SaveOutlined,
 } from "@mui/icons-material";
-import { Button, Fade, Grid, TableContainer, Typography } from "@mui/material";
+import {
+  Button,
+  Fade,
+  Grid,
+  Menu,
+  MenuItem,
+  TableContainer,
+  Typography,
+} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TablePagination from "@mui/material/TablePagination";
@@ -28,8 +36,10 @@ import { APP_BAR_HEIGHT } from "../../styles/styles";
 import { SortOrders } from "../../utilities/constants/sort";
 import dummyRows from "../../utilities/dummy-data/rows";
 import { getComparator } from "../../utilities/functions/comparators";
+import excelExport from "../../utilities/functions/excelExport";
 import { formatObjectToArray } from "../../utilities/functions/format";
 import en from "../../utilities/json/en.json";
+import { handleRowValidation } from "../../utilities/functions/validation";
 
 const LPNDateCheckPage = () => {
   const dispatch = useDispatch();
@@ -52,7 +62,19 @@ const LPNDateCheckPage = () => {
   const [rows, setRows] = useState(originalRowsRef.current);
   const [isUpdated, setIsUpdated] = useState(false);
   const [isChangesModalOpen, setIsChangesModalOpen] = useState(false);
+  const [rowErrors, setRowErrors] = useState([]);
+  const [exportAnchorEl, setExportAnchorEl] = React.useState(null);
+  const isExportOpen = Boolean(exportAnchorEl);
+
   const { getLPNData } = useGetLPNData(filteredRowsRef, originalRowsRef, setRows);
+
+  const handleExportClick = (event) => {
+    setExportAnchorEl(event.currentTarget);
+  };
+
+  const handleExportClose = () => {
+    setExportAnchorEl(null);
+  };
 
   const handleChangesModalOpen = () => setIsChangesModalOpen(true);
 
@@ -80,8 +102,32 @@ const LPNDateCheckPage = () => {
     handleChangePage(undefined, 0);
   };
 
+  const handleWarehouseChange = (warehouseChange) => {
+    if (Object.keys(unsavedRowsRef.current).length !== 0) {
+      handleChangesModalOpen();
+      return;
+    }
+    warehouseChange();
+  };
+
   const handleSaveAll = () => {
     if (Object.keys(unsavedRowsRef.current).length !== 0) {
+      let isError = false;
+
+      Object.entries(unsavedRowsRef.current).forEach(([key]) => {
+        const error = handleRowValidation(unsavedRowsRef.current[key]);
+
+        if (error) {
+          isError = true;
+          rowErrors[parseInt(key)] = error;
+        }
+      });
+
+      if (isError) {
+        setRowErrors([...rowErrors]);
+        return;
+      }
+
       postAdjustAll(
         {
           lpnMultiAdjustRequest: formatObjectToArray(unsavedRowsRef.current),
@@ -116,6 +162,7 @@ const LPNDateCheckPage = () => {
             }
           });
           setSaveAllCounter(saveAllCounter + 1);
+          setRowErrors([]);
           dispatch(openNotification({ title: en.report, message: report }));
           handleChangePage(undefined, 0);
           handleFilter();
@@ -126,14 +173,44 @@ const LPNDateCheckPage = () => {
     }
   };
 
+  const handleSingleRowValidation = (i) => {
+    const error = handleRowValidation(rows[i]);
+
+    if (error) {
+      rowErrors[i] = error;
+      setRowErrors([...rowErrors]);
+      return false;
+    }
+
+    return true;
+  };
+
   const handleRowSave = (i) => {
     delete unsavedRowsRef.current[i];
     originalRowsRef.current.splice(i + rowsPerPage * page, 1);
+    Object.entries(unsavedRowsRef.current)
+      .sort((a, b) => a[0] - b[0])
+      .forEach(([key, value]) => {
+        const parsedKey = parseInt(key);
+
+        if (parsedKey > i) {
+          unsavedRowsRef.current[parsedKey - 1] = value;
+          delete unsavedRowsRef.current[key];
+          if (rowErrors[parsedKey]) {
+            rowErrors[parsedKey - 1] = rowErrors[parsedKey];
+            rowErrors[parsedKey] = undefined;
+          }
+        }
+      });
     if (Object.keys(unsavedRowsRef.current).length === 0) {
       setIsUpdated(false);
     }
     if (rows.length / rowsPerPage < page) {
       handleChangePage(undefined, 0);
+    }
+    if (rowErrors[i]) {
+      rowErrors[i] = undefined;
+      setRowErrors([...rowErrors]);
     }
     handleFilter(filters, true);
   };
@@ -232,13 +309,22 @@ const LPNDateCheckPage = () => {
       setPage(0);
     }
   };
+
   const handleReset = () => {
     setIsUpdated(false);
     unsavedRowsRef.current = {};
     setSaveAllCounter(saveAllCounter + 1);
   };
 
-  const handleCSVExport = () => csvLinkRef.current.link.click();
+  const handleCSVExport = () => {
+    csvLinkRef.current.link.click();
+    handleExportClose();
+  };
+
+  const handleExcelExport = () => {
+    excelExport(originalRowsRef.current, `rndc-${selectedWarehouse}`);
+    handleExportClose();
+  };
 
   useEffect(() => {
     const resizeListener = () =>
@@ -266,12 +352,30 @@ const LPNDateCheckPage = () => {
       setRows([...filteredRowsRef.current].sort(getComparator(sortOrder, sort)));
     }
   }, [sort, sortOrder]);
-  console.log(unsavedRowsRef.current)
+
+  useEffect(() => {
+    const onBeforeUnload = (e) => {
+      e.preventDefault();
+
+      if (Object.keys(unsavedRowsRef.current).length !== 0) {
+        return (e.returnValue = en.clearWarningMessage);
+      }
+    };
+
+    window.addEventListener("beforeunload", onBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", onBeforeUnload);
+    };
+  }, []);
+
   return (
     <PageLayout>
       <Grid container direction="column" pt={2} pl={5}>
         <Grid container alignItems="center">
-          <WarehousePicker sx={{ mb: 0.5, mt: 0.5 }} />
+          <WarehousePicker
+            onChange={handleWarehouseChange}
+            sx={{ mb: 0.5, mt: 0.5 }}
+          />
           <Breadcrumbs
             icon={CheckCircleOutline}
             label={en.ilpnDateCheck}
@@ -320,6 +424,8 @@ const LPNDateCheckPage = () => {
                       unsavedRowsRef={unsavedRowsRef}
                       row={row}
                       index={i}
+                      error={rowErrors[i]}
+                      onRowValidation={handleSingleRowValidation}
                       saveAllCounter={saveAllCounter}
                       onRowSave={handleRowSave}
                       onRowSaveFailed={handleRowSaveFailed}
@@ -361,18 +467,28 @@ const LPNDateCheckPage = () => {
           </Button>
           <Button
             variant="contained"
-            data={originalRowsRef.current}
             endIcon={<ExitToAppOutlined />}
             sx={{ m: 1, mr: 2 }}
-            onClick={handleCSVExport}
+            onClick={handleExportClick}
           >
             {en.export}
           </Button>
+          <Menu
+            anchorEl={exportAnchorEl}
+            open={isExportOpen}
+            onClose={handleExportClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem onClick={handleCSVExport}>CSV</MenuItem>
+            <MenuItem onClick={handleExcelExport}>Excel</MenuItem>
+          </Menu>
         </Grid>
         <CSVLink
           ref={csvLinkRef}
           data={originalRowsRef.current}
-          filename="rndc.csv"
+          filename={`rndc-${selectedWarehouse}.csv`}
           style={{ display: "none" }}
         >
           {en.export}

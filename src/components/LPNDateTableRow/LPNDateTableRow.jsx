@@ -1,4 +1,4 @@
-import { CheckOutlined, SaveOutlined } from "@mui/icons-material";
+import { CheckOutlined, ErrorOutline, SaveOutlined } from "@mui/icons-material";
 import {
   Fade,
   Grid,
@@ -17,16 +17,18 @@ import StyledTableRow from "../../components-styled/StyledTableRow/StyledTableRo
 import usePostAdjustOne from "../../hooks/usePostAdjustOne";
 import { openNotification } from "../../redux/reducers/settingsSlice";
 import { settingsState } from "../../redux/store";
+import { TRACK_DATE } from "../../utilities/constants/enums";
 import columns from "../../utilities/constants/lpn-date-table-columns";
 import { getDateFromPicker } from "../../utilities/functions/date";
 import { formatRow } from "../../utilities/functions/format";
 import en from "../../utilities/json/en.json";
-import { TRACK_DATE } from "../../utilities/constants/enums";
 
 const LPNDateTableRow = ({
   unsavedRowsRef,
   row,
+  error,
   index,
+  onRowValidation,
   onRowSave,
   onRowSaveFailed,
   saveAllCounter,
@@ -104,9 +106,50 @@ const LPNDateTableRow = ({
     }
   };
 
-  const handleSuggestedCPD = () => handlePriortyDateChange(row.suggestedCPD);
+  const handleSuggestedDateFade = () => {
+    if (
+      (row.reason.includes("CPD Null") ||
+        row.reason.includes("VINTAGE SPECIFIC CPD <> 01-01 VINTAGE YEAR")) &&
+      consumptionPriorityDate === row.suggestedCPD
+    ) {
+      return false;
+    }
+
+    if (
+      (row.reason.includes("MFG DATE ITEM MISSING EXP DATE") ||
+        row.reason.includes("MFG DATE TRACKED CPD <> EXP DATE") ||
+        row.reason.includes("Exp DATE TRACKED CPD <> EXP DATE")) &&
+      row.suggestedCPD === consumptionPriorityDate &&
+      row.suggestedCPD === manufactureDate
+    ) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSuggestedCPD = () => {
+    switch (true) {
+      case row.reason.includes("CPD Null") ||
+        row.reason.includes("VINTAGE SPECIFIC CPD <> 01-01 VINTAGE YEAR"):
+        handlePriortyDateChange(row.suggestedCPD);
+        break;
+      case row.reason.includes("MFG DATE ITEM MISSING EXP DATE") ||
+        row.reason.includes("MFG DATE TRACKED CPD <> EXP DATE") ||
+        row.reason.includes("Exp DATE TRACKED CPD <> EXP DATE"):
+        handlePriortyDateChange(row.suggestedCPD);
+        handleExpirationDateChange(row.suggestedCPD);
+        break;
+      default:
+        break;
+    }
+  };
 
   const handlePostAdjustOne = () => {
+    if (!onRowValidation(index)) {
+      return;
+    }
+
     postAdjustOne(
       {
         lpnSingleAdjustRequest: formatRow(
@@ -207,29 +250,28 @@ const LPNDateTableRow = ({
             );
           case column.isPriorityDate:
             return (
-              <Grid container alignItems="center">
-                <Grid item xs={2}>
-                  {row.suggestedCPD ? (
-                    <Fade in={consumptionPriorityDate !== row.suggestedCPD}>
-                      <Tooltip title={en.suggestedCpdTooltip}>
-                        <IconButton sx={{ p: 0 }} onClick={handleSuggestedCPD}>
-                          <CheckOutlined color="success" />
-                        </IconButton>
-                      </Tooltip>
-                    </Fade>
-                  ) : null}
-                </Grid>
-                <Grid item xs={10}>
-                  <DatePicker
-                    data-testid="Consumption Priority Date"
-                    value={consumptionPriorityDate}
-                    inputFormat="MM/DD/YYYY"
-                    onChange={handlePriortyDateChange}
-                    renderInput={(params) => <TextField size="small" {...params} />}
-                  />
-                </Grid>
-              </Grid>
+              <DatePicker
+                data-testid="Consumption Priority Date"
+                value={consumptionPriorityDate}
+                inputFormat="MM/DD/YYYY"
+                onChange={handlePriortyDateChange}
+                renderInput={(params) => <TextField size="small" {...params} />}
+              />
             );
+          case column.isAcceptDate:
+            if (row.reason.includes("Suggested Date <> NULL") || !row.suggestedCPD) {
+              break;
+            }
+
+            return row.suggestedCPD ? (
+              <Fade in={handleSuggestedDateFade()}>
+                <Tooltip title={en.suggestedCpdTooltip} enterTouchDelay={0}>
+                  <IconButton sx={{ p: 0 }} onClick={handleSuggestedCPD}>
+                    <CheckOutlined color="success" />
+                  </IconButton>
+                </Tooltip>
+              </Fade>
+            ) : null;
           case column.isSuggestedCPD:
             if (!value) {
               break;
@@ -245,24 +287,31 @@ const LPNDateTableRow = ({
             );
           case column.isSave:
             return (
-              <SquareButton
-                variant="contained"
-                color="primary"
-                onClick={handleSave}
-                sx={{
-                  mr: 1,
-                  backgroundColor: "#fff",
-                  ["&:hover"]: {
-                    backgroundColor: "primary.main",
-                    color: "#fff",
-                    [".MuiSvgIcon-root"]: {
+              <Grid container alignItems="center" justifyContent="flex-end">
+                {error ? (
+                  <Tooltip title={error}>
+                    <ErrorOutline htmlColor="white" sx={{ mr: 1 }} />
+                  </Tooltip>
+                ) : null}
+                <SquareButton
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSave}
+                  sx={{
+                    mr: 1,
+                    backgroundColor: "#fff",
+                    ["&:hover"]: {
+                      backgroundColor: "primary.main",
                       color: "#fff",
+                      [".MuiSvgIcon-root"]: {
+                        color: "#fff",
+                      },
                     },
-                  },
-                }}
-              >
-                <SaveOutlined color="primary" />
-              </SquareButton>
+                  }}
+                >
+                  <SaveOutlined color="primary" />
+                </SquareButton>
+              </Grid>
             );
           default:
             return value;
@@ -301,21 +350,26 @@ const LPNDateTableRow = ({
   }, [expirationDate, manufactureDate, consumptionPriorityDate, isUpdated]);
 
   return (
-    <StyledTableRow
-      hover={!isUpdated}
-      change={isUpdated}
-      role="checkbox"
-      tabIndex={-1}
-      key={row.code}
-    >
-      {renderColumns()}
-    </StyledTableRow>
+    <Tooltip title={row.reason} enterTouchDelay={0}>
+      <StyledTableRow
+        hover={!isUpdated}
+        change={isUpdated}
+        error={error}
+        role="checkbox"
+        tabIndex={-1}
+        key={row.code}
+      >
+        {renderColumns()}
+      </StyledTableRow>
+    </Tooltip>
   );
 };
 
 LPNDateTableRow.propTypes = {
   row: PropTypes.object.isRequired,
   index: PropTypes.number.isRequired,
+  error: PropTypes.string,
+  onRowValidation: PropTypes.func.isRequired,
   onRowSave: PropTypes.func.isRequired,
   onRowSaveFailed: PropTypes.func.isRequired,
   unsavedRowsRef: PropTypes.object.isRequired,
