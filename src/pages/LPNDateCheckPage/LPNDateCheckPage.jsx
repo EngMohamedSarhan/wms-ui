@@ -115,7 +115,10 @@ const LPNDateCheckPage = () => {
       let isError = false;
 
       Object.entries(unsavedRowsRef.current).forEach(([key]) => {
-        const error = handleRowValidation(unsavedRowsRef.current[key]);
+        const error = handleRowValidation({
+          ...rows[key],
+          ...unsavedRowsRef.current[key],
+        });
 
         if (error) {
           isError = true;
@@ -174,7 +177,7 @@ const LPNDateCheckPage = () => {
   };
 
   const handleSingleRowValidation = (i) => {
-    const error = handleRowValidation(rows[i]);
+    const error = handleRowValidation({ ...rows[i], ...unsavedRowsRef.current[i] });
 
     if (error) {
       rowErrors[i] = error;

@@ -50,7 +50,7 @@ const LPNDateTableRow = ({
   const [isUpdated, setIsUpdated] = useState(false);
 
   const handleManufactureDateChange = (value) => {
-    if (!value || value == "") {
+    if (!value) {
       setManufactureDate(null);
       if (row.manufacturedDate) {
         setIsUpdated(true);
@@ -69,7 +69,7 @@ const LPNDateTableRow = ({
   };
 
   const handleExpirationDateChange = (value) => {
-    if (!value || value == "") {
+    if (!value) {
       setExpirationDate(null);
       if (row.expirationDate) {
         setIsUpdated(true);
@@ -88,7 +88,7 @@ const LPNDateTableRow = ({
   };
 
   const handlePriortyDateChange = (value) => {
-    if (!value || value == "") {
+    if (!value) {
       setConsumptionPriorityDate(null);
       if (row.consumptionPriorityDate) {
         setIsUpdated(true);
@@ -141,6 +141,7 @@ const LPNDateTableRow = ({
         handleExpirationDateChange(row.suggestedCPD);
         break;
       default:
+        handlePriortyDateChange(row.suggestedCPD);
         break;
     }
   };

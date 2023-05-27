@@ -70,9 +70,11 @@ export const handleRowValidation = (row) => {
       if (
         !row.consumptionPriorityDate ||
         row.consumptionPriorityDate.split("-")[1] !== "01" ||
-        row.consumptionPriorityDate.split("-")[2] !== "01"
+        row.consumptionPriorityDate.split("-")[2] !== "01" ||
+        new Date(row.consumptionPriorityDate).getUTCFullYear() <
+          new Date().getUTCFullYear()
       ) {
-        return "Consumption priority date must be 01/01 of the vintage year!";
+        return "Consumption priority date must be 01/01 of the vintage year, and the vintage year shouldn't be in the past!";
       }
 
       return null;

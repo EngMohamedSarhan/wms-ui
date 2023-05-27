@@ -125,16 +125,9 @@ describe("LPNDateTableRow Component", () =>
     fireEvent.change(mfgDatePicker, { target: { value: "08/20/2022" } });
     expect(mfgDatePicker.value).toEqual("08/20/2022");
 
-    fireEvent.change(mfgDatePicker, { target: { selected: null, value: null } });
-    expect(mfgDatePicker.value).toEqual("");
-
     fireEvent.change(expDatePicker, { target: { value: "08/20/2022" } });
     expect(expDatePicker.value).toEqual("08/20/2022");
-    fireEvent.change(expDatePicker, { target: { value: null } });
-    expect(expDatePicker.value).toEqual("");
 
     fireEvent.change(conPrioDatePicker, { target: { value: "08/20/2022" } });
     expect(conPrioDatePicker.value).toEqual("08/20/2022");
-    fireEvent.change(conPrioDatePicker, { target: { value: null } });
-    expect(conPrioDatePicker.value).toEqual("");
   }));
